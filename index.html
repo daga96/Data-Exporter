@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <div>
+      Table Data File: <input type="file" id="fileInput" />
+      <button id="generateButton">Generate SQL</button>
+      <p id="completed"></p>
+    </div>
+
+    <script>
+      document
+        .getElementById("generateButton")
+        .addEventListener("click", () => {
+          const fileInput1 = document.getElementById("fileInput");
+          const selectedFile1 = fileInput.files[0];
+          const filePath1 = selectedFile1.path;
+          electron.ipcRenderer.send("generate-sql", filePath1);
+          electron.ipcRenderer.on("sql-generation-completed", () => {
+            document.getElementById("completed").innerHTML = "SQL Completed";
+          });
+        });
+    </script>
+  </body>
+</html>
